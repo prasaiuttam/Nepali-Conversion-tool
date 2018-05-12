@@ -1,0 +1,15 @@
+#include<iostream>
+#include<string>
+#include"tools.h"
+int main()
+{
+	std::string a;
+	for(int i=0;i<240;i++)
+	{
+		if(a==unicode_Generator(i))
+		{
+			std::cout<<"i";
+		}
+	}
+
+}

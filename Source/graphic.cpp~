@@ -1,0 +1,301 @@
+#include "graphic.h"
+int main(int argc,char *argv[])
+{
+        gtk_init(&argc,&argv); //initializing the two arguments
+
+        GtkWidget *menubar,*homemenu,*home,*refresh,*exit;
+        GtkWidget *skin,*skin1,*skin2,*skin3,*custom_skin,*settingmenu,*normal_skin;
+        GtkWidget *helpmenu,*help,*help1,*about,*homepage;
+        GtkWidget *box,*button1,*label,*label1,*label2,*label5;
+        GtkWidget *box1,*button2,*scroll,*scroll1;
+        GtkWidget *box2,*label3,*button3,*button4;
+        GtkWidget *box3,*label4,*button5,*label6,*button7,*label7,*box4,*label11;
+        GtkWidget *box5,*button6,*label8,*box6,*box7,*label12,*button8;
+        GtkWidget *label9,*label10,*view,*view1;
+        PangoFontDescription *font_desc;
+        GtkTextIter iter,start,end;
+        GtkWidget *layoutmenu,*layout,*unicode_layout,*preeti_layout;
+        GtkWidget *label20;
+
+
+        //creating window
+        main_window=gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_default_size(GTK_WINDOW(main_window),800,550);
+        gtk_window_set_position(GTK_WINDOW(main_window),GTK_WIN_POS_CENTER);
+        gtk_container_set_border_width(GTK_CONTAINER(main_window),20);
+        gtk_window_set_title(GTK_WINDOW(main_window),"Nepali Conversion Tool");
+
+        g_signal_connect(main_window,"delete-event",G_CALLBACK(gtk_main_quit),NULL);
+
+
+	box=gtk_box_new(GTK_ORIENTATION_VERTICAL,5);        //creating vertical box
+
+
+//creating menusbar for home
+
+	menubar=gtk_menu_bar_new();
+	homemenu=gtk_menu_new();
+	home=gtk_menu_item_new_with_label("Home");
+	refresh=gtk_menu_item_new_with_label("Refresh");
+	exit=gtk_menu_item_new_with_label("Exit");
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(home),homemenu);
+	gtk_menu_shell_append(GTK_MENU_SHELL(homemenu),refresh);
+	gtk_menu_shell_append(GTK_MENU_SHELL(homemenu),exit);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menubar),home);
+
+	//setting menu
+
+	settingmenu=gtk_menu_new();
+	skin=gtk_menu_item_new_with_label("Background");
+	skin1=gtk_menu_item_new_with_label("Skin 1");
+	skin2=gtk_menu_item_new_with_label("Skin 2");
+	skin3=gtk_menu_item_new_with_label("Skin 3");
+	custom_skin=gtk_menu_item_new_with_label("Custom Skin");
+	normal_skin=gtk_menu_item_new_with_label("Default Skin");
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(skin),settingmenu);
+	gtk_menu_shell_append(GTK_MENU_SHELL(settingmenu),skin1);
+	gtk_menu_shell_append(GTK_MENU_SHELL(settingmenu),skin2);
+	gtk_menu_shell_append(GTK_MENU_SHELL(settingmenu),skin3);
+	gtk_menu_shell_append(GTK_MENU_SHELL(settingmenu),normal_skin);
+	gtk_menu_shell_append(GTK_MENU_SHELL(settingmenu),custom_skin);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menubar),skin);
+
+
+
+
+	//creating menusbar for keyboard layouts
+
+	layoutmenu=gtk_menu_new();
+	layout=gtk_menu_item_new_with_label("Layout");
+	unicode_layout=gtk_menu_item_new_with_label("Unicode Layout");
+	preeti_layout=gtk_menu_item_new_with_label("preeti Layout");
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(layout),layoutmenu);
+	gtk_menu_shell_append(GTK_MENU_SHELL(layoutmenu),unicode_layout);
+	gtk_menu_shell_append(GTK_MENU_SHELL(layoutmenu),preeti_layout);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menubar),layout);
+
+	//creating menusbar for help
+
+	helpmenu=gtk_menu_new();
+	help=gtk_menu_item_new_with_label("Help");
+	help1=gtk_menu_item_new_with_label("help");
+	about=gtk_menu_item_new_with_label("About");
+	homepage=gtk_menu_item_new_with_label("Homepage");
+	gtk_menu_item_set_submenu(GTK_MENU_ITEM(help),helpmenu);
+	gtk_menu_shell_append(GTK_MENU_SHELL(helpmenu),help1);
+	gtk_menu_shell_append(GTK_MENU_SHELL(helpmenu),about);
+	gtk_menu_shell_append(GTK_MENU_SHELL(helpmenu),homepage);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menubar),help);
+
+
+	gtk_box_pack_start(GTK_BOX(box),menubar,FALSE,FALSE,20);
+
+
+
+
+	label=gtk_label_new("WELCOME!!!   Nepali Conversion Tool\n\n");
+	gtk_widget_set_size_request(label,30,10);
+	gtk_misc_set_alignment (GTK_MISC (label),0.5, 1);   //for making an allignment
+	gtk_box_pack_start(GTK_BOX(box),label,FALSE,FALSE,0);
+
+	label1=gtk_label_new("File Convert\n");
+	gtk_widget_set_size_request(label,30,10);
+	gtk_misc_set_alignment (GTK_MISC (label1),-1, 1);   //for making an allignment
+	gtk_box_pack_start(GTK_BOX(box),label1,FALSE,FALSE,0);
+
+	//box1 and box2 for the file convert
+
+	box1=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,30);
+	gtk_container_add(GTK_CONTAINER(box),box1);
+
+	label2=gtk_label_new("1.Unicode to Preeti\t\t");
+	gtk_misc_set_alignment (GTK_MISC (label2),0.01, 0.001);   //for making an allignment
+	gtk_box_pack_start(GTK_BOX(box1),label2,FALSE,FALSE,0);
+
+
+	label9=gtk_label_new("Choose unicode file:");
+	gtk_box_pack_start(GTK_BOX(box1),label9,FALSE,FALSE,0);
+
+
+	button1=gtk_label_new("Choose Unicode File\t\t");
+    picker1 = gtk_file_chooser_button_new ("Pick a File",GTK_FILE_CHOOSER_ACTION_OPEN);
+	gtk_container_add(GTK_CONTAINER(picker1),button1);
+	gtk_box_pack_start(GTK_BOX(box1),picker1,20,10,0);
+
+
+	button2=gtk_button_new_with_label("\tConvert\t");
+	g_signal_connect(G_OBJECT(button2),"clicked",G_CALLBACK(clicked8),NULL);	//for the preeti to unicode
+	gtk_box_pack_start(GTK_BOX(box1),button2,0,0,2);
+
+	//box2
+	box2=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,30);
+	gtk_container_add(GTK_CONTAINER(box),box2);
+
+	label3=gtk_label_new("2.Preeti to Unicode\t\t  ");
+	gtk_misc_set_alignment (GTK_MISC (label3),0.01, 0.001);   //for making an allignment
+	gtk_box_pack_start(GTK_BOX(box2),label3,FALSE,FALSE,0);
+
+	label10=gtk_label_new("Choose Preeti file:");
+	gtk_box_pack_start(GTK_BOX(box2),label10,FALSE,FALSE,0);
+
+	button3=gtk_button_new_with_label("Choose Preeti File");
+	picker2 = gtk_file_chooser_button_new ("Pick a File",GTK_FILE_CHOOSER_ACTION_OPEN);
+	gtk_container_add(GTK_CONTAINER(picker2),button3);
+	gtk_box_pack_start(GTK_BOX(box2),picker2,30,30,0);
+
+	button4=gtk_button_new_with_label("\tConvert\t");
+	g_signal_connect(G_OBJECT(button4),"clicked",G_CALLBACK(clicked9),NULL);	//for the preeti to unicode
+	gtk_box_pack_start(GTK_BOX(box2),button4,0,0,2);
+
+	//box3
+	box3=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,10);
+	gtk_container_add(GTK_CONTAINER(box),box3);
+
+
+
+	label20=gtk_label_new("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t Output Folder:");
+	gtk_box_pack_start(GTK_BOX(box3),label20,0,2,0);
+
+	button5=gtk_button_new_with_label("Output Folder");
+	picker3 = gtk_file_chooser_button_new ("Pick a File",GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
+	gtk_container_add(GTK_CONTAINER(picker3),button5);
+	gtk_box_pack_start(GTK_BOX(box3),picker3,50,50,0);
+
+
+
+
+
+
+
+
+
+
+
+
+	label5=gtk_label_new("Text Convert\n\n");
+	gtk_misc_set_alignment (GTK_MISC (label5),-1,1);   //for making an allignment
+	gtk_widget_set_size_request(label5,30,10);
+	gtk_box_pack_start(GTK_BOX(box),label5,FALSE,FALSE,0);
+
+	//box4
+	box4=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,400);
+	gtk_container_add(GTK_CONTAINER(box),box4);
+
+	label6=gtk_label_new("\t\t\t\t\t\tUNICODE");
+	gtk_misc_set_alignment (GTK_MISC (label6),FALSE,1);   //for making an allignment
+	gtk_box_pack_start(GTK_BOX(box4),label6,FALSE,FALSE,0);
+
+	label7=gtk_label_new("PREETI\t\t");
+	gtk_misc_set_alignment (GTK_MISC (label7),FALSE,1);   //for making an allignment
+	gtk_box_pack_start(GTK_BOX(box4),label7,TRUE,FALSE,40);
+
+	//box5
+	box5=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,150);
+	gtk_container_add(GTK_CONTAINER(box),box5);
+
+	scroll=gtk_scrolled_window_new(0,0);
+	gtk_widget_set_size_request(scroll,70,250);
+	view=gtk_text_view_new();
+
+	gtk_container_set_border_width(GTK_CONTAINER(view),5);
+
+
+	buffer1=gtk_text_view_get_buffer(GTK_TEXT_VIEW(view));
+
+	gtk_text_buffer_create_tag(buffer1,"gap","pixels_above_lines",30,NULL);
+	gtk_text_buffer_create_tag(buffer1,"lmarg","left_margin",5,NULL);
+
+	gtk_text_buffer_get_iter_at_offset(buffer1, &iter,10);
+	gtk_text_buffer_insert(buffer1,&iter,"type here in unicode",-1);
+
+
+
+
+	gtk_container_add(GTK_CONTAINER(scroll),view);
+	gtk_box_pack_start(GTK_BOX(box5),scroll,TRUE,TRUE,10);
+
+
+	scroll1=gtk_scrolled_window_new(0,0);
+	gtk_widget_set_size_request(scroll1,70,250);
+	view1=gtk_text_view_new();
+
+
+	gtk_container_set_border_width(GTK_CONTAINER(view1),5);
+
+
+	buffer2=gtk_text_view_get_buffer(GTK_TEXT_VIEW(view1));
+
+	font_desc = pango_font_description_from_string ("Preeti 15");
+
+	gtk_widget_override_font (view1, font_desc);
+
+	pango_font_description_free (font_desc);
+
+
+
+
+
+
+	gtk_text_buffer_create_tag(buffer2,"gap","pixels_above_lines",30,NULL);
+	gtk_text_buffer_create_tag(buffer2,"lmarg","left_margin",5,NULL);
+	gtk_text_buffer_get_iter_at_offset(buffer2, &iter,10);
+
+	gtk_text_buffer_insert(buffer2,&iter,"ofxf n]V‍g'xf]; ",-1);
+	gtk_container_add(GTK_CONTAINER(scroll1),view1);
+	gtk_box_pack_start(GTK_BOX(box5),scroll1,TRUE,TRUE,10);
+
+
+	//box6
+	box6=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,0);
+	gtk_container_add(GTK_CONTAINER(box),box6);
+
+	label11=gtk_label_new(" \t\t\t\t         ");
+
+	gtk_box_pack_start(GTK_BOX(box6),label11,FALSE,FALSE,0);
+
+
+
+
+	button7=gtk_button_new_with_label("\t\t\tconvert from unicode to preeti\t\t\t");
+	gtk_box_pack_start(GTK_BOX(box6),button7,FALSE,FALSE,300);
+	g_signal_connect(G_OBJECT(button7),"clicked",G_CALLBACK(clicked),NULL);
+
+	button6=gtk_button_new_with_label("\t\tclose\t\t");
+	gtk_box_pack_end(GTK_BOX(box6),button6,0,0,5);
+	//box7
+	box7=gtk_box_new(GTK_ORIENTATION_HORIZONTAL,0);
+	gtk_container_add(GTK_CONTAINER(box),box7);
+
+	label12=gtk_label_new(" \t\t\t\t         ");
+
+	gtk_box_pack_start(GTK_BOX(box7),label12,FALSE,FALSE,0);
+	button8=gtk_button_new_with_label("\t\t\tconvert from preeti to unicode\t\t\t");
+	gtk_box_pack_start(GTK_BOX(box7),button8,FALSE,FALSE,300);
+	g_signal_connect(G_OBJECT(button8),"clicked",G_CALLBACK(clicked1),NULL);
+
+
+	g_signal_connect(button6,"clicked",G_CALLBACK(gtk_main_quit),main_window);
+
+
+
+	g_signal_connect(G_OBJECT(skin1),"activate",G_CALLBACK(activate4),NULL);
+	g_signal_connect(G_OBJECT(skin2),"activate",G_CALLBACK(activate5),NULL);
+	g_signal_connect(G_OBJECT(skin3),"activate",G_CALLBACK(activate6),NULL);
+	g_signal_connect(G_OBJECT(custom_skin),"activate",G_CALLBACK(Custom_Skin_Activate),NULL);
+	g_signal_connect(G_OBJECT(normal_skin),"activate",G_CALLBACK(activate7),NULL);
+	g_signal_connect(G_OBJECT(exit),"activate",G_CALLBACK(gtk_main_quit),NULL);
+	g_signal_connect(G_OBJECT(refresh),"activate",G_CALLBACK(activate),NULL);
+	g_signal_connect(G_OBJECT(help1),"activate",G_CALLBACK(activate1),NULL);
+	g_signal_connect(G_OBJECT(about),"activate",G_CALLBACK(activate2),NULL);
+	g_signal_connect(G_OBJECT(homepage),"activate",G_CALLBACK(activate3),NULL);
+	g_signal_connect(G_OBJECT(unicode_layout),"activate",G_CALLBACK(activate8),NULL);
+	g_signal_connect(G_OBJECT(preeti_layout),"activate",G_CALLBACK(activate9),NULL);
+
+
+
+	gtk_container_add(GTK_CONTAINER(main_window),box);
+	//making all widgets visible
+	gtk_widget_show_all(main_window);
+	gtk_main(); //running main loop
+	return 0;
+}
